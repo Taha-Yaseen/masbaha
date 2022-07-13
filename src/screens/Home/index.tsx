@@ -19,7 +19,7 @@ const HomeScreen = () =>{
       <div className={styles.reset} onClick={handleResetAll}>تصفير العدادات</div>
       <div className={styles.counters}>
       {
-        Object.keys(azkar.value).map((zeker:any)=>(
+        Object.keys(azkar.value).map((zeker:string)=>(
           <Counter key={zeker} title={zeker} counter={azkar.value[zeker]}/>
           ))
         }
