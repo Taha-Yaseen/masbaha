@@ -1,3 +1,4 @@
+import { Button, Col, Container, Row } from "react-bootstrap"
 import Counter from "../../components/counter"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { resetAll } from "../../redux/slices/data"
@@ -16,13 +17,19 @@ const HomeScreen = () =>{
   }
   return (
     <div className={styles.container}>
-      <div className={styles.reset} onClick={handleResetAll}>تصفير العدادات</div>
+      <Button  onClick={handleResetAll} variant="danger">تصفير العدادات</Button>
       <div className={styles.counters}>
-      {
-        Object.keys(azkar.value).map((zeker:string)=>(
-          <Counter key={zeker} title={zeker} counter={azkar.value[zeker]}/>
-          ))
-        }
+        <Container>
+          <Row>
+          {
+           Object.keys(azkar.value).map((zeker:string)=>(
+            <Col xs={12} sm={6} lg={4}>
+              <Counter key={zeker} title={zeker} counter={azkar.value[zeker]}/>
+            </Col>
+             ))
+            }
+        </Row>
+        </Container>
       </div>
     </div>
   )
