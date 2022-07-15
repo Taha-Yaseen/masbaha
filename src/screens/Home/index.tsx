@@ -1,7 +1,7 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
 import Counter from "../../components/counter"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-import { resetAll } from "../../redux/slices/data"
+import { resetAll, undo } from "../../redux/slices/data"
 import { RootState } from "../../redux/store"
 import styles from "./styles.module.scss"
 
@@ -15,9 +15,17 @@ const HomeScreen = () =>{
     if(ans)
     dispatch(resetAll())    
   }
+  const handleUndo = ()=>{
+    const ans = window.confirm('هل تريد الرجوع؟ ')
+    if(ans)
+    dispatch(undo())    
+  }
   return (
     <div className={styles.container}>
-      <Button  onClick={handleResetAll} variant="danger">تصفير العدادات</Button>
+      <div className={styles.actionButtons}>
+        <Button  onClick={handleUndo} variant="warning">Back</Button>
+        <Button  onClick={handleResetAll} variant="danger">تصفير العدادات</Button>
+      </div>
       <div className={styles.counters}>
         <Container>
           <Row>

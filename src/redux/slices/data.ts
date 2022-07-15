@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Data {
   value:{[key:string]:number}
+  prev:{[key:string]:number}
 }
 
 export const dataSlice = createSlice({
@@ -23,20 +24,44 @@ export const dataSlice = createSlice({
     "أستغفر الله الذى لا إله إلا هو الحي القيوم وأتوب إليه":0,
     "لا اله الا انت سبحانك إني كنت من الظالمين":0,
     "سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته":0,
-    "لا إله إلا الله وحده لا شريك لهُ ، لهُ الملك ، ولهُ الحمدُ ، وهو على كل شيء قدير":0,}
+    "لا إله إلا الله وحده لا شريك لهُ ، لهُ الملك ، ولهُ الحمدُ ، وهو على كل شيء قدير":0,},
+    prev:{
+      "سبحان الله":0,
+      "الحمدلله":0,
+      "لا إله إلا الله":0,
+      "الله أكبر":0,
+      "رب اغفر لي":0,
+      "استغفر الله":0,
+      "لا حول ولا قوة إلا بالله":0,
+      "اللهمَّ إنك عفوٌّ تُحبُّ العفوَ فاعفُ عنِّي":0,
+      "اللهم صل وسلم وبارك على سيدنا محمد":0,
+      "سبحان الله وبحمده سبحان الله العظيم":0,
+      "سبحان الله والحمد لله ولا إله إلا الله والله أكبر":0,
+      "أستغفر الله الذى لا إله إلا هو الحي القيوم وأتوب إليه":0,
+      "لا اله الا انت سبحانك إني كنت من الظالمين":0,
+      "سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته":0,
+      "لا إله إلا الله وحده لا شريك لهُ ، لهُ الملك ، ولهُ الحمدُ ، وهو على كل شيء قدير":0,
+    }
   } as Data,
   reducers: {
-    set: (state, action) => action.payload,
+    undo:(state) => {
+      return{
+        prev:state.value,
+        value:state.prev
+      }
+    },
     inc: (state,action:PayloadAction<string>) => {
       return {
-       value:{ 
-        ...state.value,
-        [action.payload]: state.value[action.payload] +  1 
-       }
+        prev:state.value,
+        value:{ 
+          ...state.value,
+          [action.payload]: state.value[action.payload] +  1 
+        }
       }
     },
     reset: (state,action:PayloadAction<string>) => {
       return {
+        prev:state.value,
        value:{ 
         ...state.value,
         [action.payload]:0
@@ -45,6 +70,7 @@ export const dataSlice = createSlice({
     },
     resetAll:(state) => {
       return {
+        prev:state.value,
         value:{
           "سبحان الله":0,
           "الحمدلله":0,
@@ -66,6 +92,6 @@ export const dataSlice = createSlice({
    },
 });
 
-export const { set,inc,reset,resetAll } = dataSlice.actions;
+export const { inc,reset,resetAll, undo } = dataSlice.actions;
 
 export default dataSlice.reducer;
